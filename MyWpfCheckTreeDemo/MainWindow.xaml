@@ -1,0 +1,29 @@
+﻿<Window x:Class="MyWpfCheckTreeDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:VM="clr-namespace:MyWpfCheckTreeDemo.AppViewModel"
+        Title="MainWindow" Height="350" Width="525" Loaded="LoadedEvent">
+    <Window.Resources>
+        <HierarchicalDataTemplate x:Key="MyTreeItemTemplate"  DataType="{x:Type VM:MyTree}" ItemsSource="{Binding Path=Children,Mode=OneWay}">
+            <StackPanel x:Name="My_SP"  Orientation="Horizontal" Margin="2">
+                <CheckBox  IsChecked="{Binding Path=IsChecked}" >
+                </CheckBox>
+                <ContentPresenter  Content="{Binding Path=Name,Mode=OneTime}" Margin="2,0"/>
+            </StackPanel>
+        </HierarchicalDataTemplate>
+        <Style x:Key="TreeViewItemStyle" TargetType="{x:Type TreeViewItem}">
+            <Setter Property="IsExpanded" Value="True" />
+            <Setter Property="IsSelected" Value="{Binding Path=IsSelected,Mode=TwoWay}"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <DockPanel>
+            
+            <TreeView  x:Name="tv" ItemsSource="{Binding MyTrees}"
+                      ItemContainerStyle="{StaticResource TreeViewItemStyle}"
+                      ItemTemplate="{StaticResource MyTreeItemTemplate}"
+                      ></TreeView>
+        </DockPanel>
+        
+    </Grid>
+</Window>
